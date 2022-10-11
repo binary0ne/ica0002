@@ -1,1 +1,1 @@
-webserv1 ansible_host=193.40.156.67 ansible_port=13522 ansible_ssh_user=ubuntu
+webserv1 ansible_host=193.40.156.67 ansible_port=13022 ansible_ssh_user=ubuntu
