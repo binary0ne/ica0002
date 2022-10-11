@@ -1,0 +1,14 @@
+- name: Install nginx
+  ansible.builtin.apt:
+    name:
+      - nginx
+
+- name: Run Nginx
+  service:
+    name: nginx
+    state: started
+
+- name: Upload website page
+  template:
+    src: index.html.j2
+    dest: /var/www/index.html

@@ -1,0 +1,14 @@
+- name: Get user list
+  include_vars: users_vars.yaml
+
+- name: Add Users
+  ansible.builtin.user:
+    name: "{{ item }}"
+    group: users
+  loop: "{{ users }}"
+
+- name: Add SSH keys for users
+  ansible.posix.authorized_key:
+    user: "{{ item }}"
+    key: https://github.com/{{ item }}.keys
+  loop: "{{ users }}"

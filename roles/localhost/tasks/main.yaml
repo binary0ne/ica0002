@@ -1,0 +1,14 @@
+- name: Get variables
+  include_vars: localhost_vars.yaml
+
+- name: Build script
+  template:
+    src: grab_credentials.py.j2
+    dest: roles/localhost/files/grab_credentials.py
+
+- name: Update hosts
+  shell:
+    "python roles/localhost/files/grab_credentials.py"
+
+- name: Refresh host lists
+  meta: refresh_inventory

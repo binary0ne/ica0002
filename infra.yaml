@@ -1,44 +1,13 @@
----
+- name: Operations on local machine
+  hosts: 127.0.0.1
+  connection: local
+  roles:
+    - localhost
 
-  - name: Ansible connection test
-    hosts: all
-    become: yes
-    vars:
-      server_name: "{{ ansible_default_ipv4.address }}"
-      document_root: /var/www/
-    tasks:
-    - name: Nginx setup
-      become: yes
-      apt: pkg=nginx state=latest update_cache=true
-
-    - name: index.html.j2 copy
-      become: yes
-      template: src=site/index.html.j2 dest=/var/www/index.html
-
-    - name: copy nginx site.conf
-      become: yes
-      template:
-        src: site.conf.j2
-        dest: /etc/nginx/sites-available/default
-        owner: root
-        group: root
-        mode: '0644'
-      notify: restart nginx
-
-    - name: Enable new site
-      become: yes
-      file:
-        src: /etc/nginx/sites-available/default
-        dest: /etc/nginx/sites-enabled/default
-        state: link
-      notify: restart nginx
-
-    roles:
-      - test_connection
-
-    handlers:
-      - name: restart nginx
-        service:
-          name: nginx
-          state: restarted
+- name: Web server
+  hosts: web_servers
+  become: yes
+  roles:
+    - nginx
+    - users
 
