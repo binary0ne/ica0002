@@ -33,7 +33,7 @@ def process_config_lines(cl):
         line = line.replace('<td>', '')
         data_array = line.split('</td>')
         hostname = data_array[0]
-        ip = data_array[1]
+        ip = data_array[2].split(' ')[0].split('@')[1]
         port = data_array[2].split(' ')[-1]
         user = data_array[2].split(' ')[0].split('@')[0]
         param = f'{hostname} ansible_host={ip} ansible_port={port} ansible_user={user}\n'
