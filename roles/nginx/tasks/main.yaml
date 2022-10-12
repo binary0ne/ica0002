@@ -2,13 +2,20 @@
   ansible.builtin.apt:
     name:
       - nginx
+  notify: Run Nginx
 
-- name: Run Nginx
+- name: Enable nginx
   service:
     name: nginx
-    state: started
+    enabled: yes
 
 - name: Upload website page
   template:
     src: index.html.j2
-    dest: /var/www/index.html
+    dest: /var/www/html/index.html
+
+- name: Upload nginx config
+  template:
+    src: default.j2
+    dest: /etc/nginx/sites-enabled/default
+  notify: Restart Nginx

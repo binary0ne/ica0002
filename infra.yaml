@@ -1,13 +1,22 @@
 - name: Operations on local machine
   hosts: 127.0.0.1
   connection: local
+  gather_facts: no
   roles:
     - localhost
+
+- name: Remote hosts setup
+  hosts: remote_hosts
+  become: yes
+  roles:
+    - remote_hosts
 
 - name: Web server
   hosts: web_servers
   become: yes
+  gather_facts: no
   roles:
+    - agama
+    - uwsgi
     - nginx
-    - users
 

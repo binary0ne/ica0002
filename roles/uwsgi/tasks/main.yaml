@@ -1,0 +1,23 @@
+- name: Load agama vars
+  include_vars: agama_setup_vars.yaml
+
+- name: Load uwsgi vars
+  include_vars: uwsgi_install_vars.yaml
+
+- name: Install uwsgi
+  ansible.builtin.apt:
+    name:
+      - uwsgi
+      - uwsgi-plugin-python3
+  notify: Start uwsgi
+
+- name: Enable uwsgi
+  service:
+    name: uwsgi
+    enabled: yes
+
+- name: Upload config
+  template:
+    src: agama.ini.j2
+    dest: /etc/uwsgi/apps-enabled/agama.ini
+  notify: Restart uwsgi
