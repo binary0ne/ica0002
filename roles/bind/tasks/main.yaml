@@ -1,0 +1,5 @@
+- name: Install bind
+  ansible.builtin.apt:
+    name:
+      - bind9
+  notify: Start bind

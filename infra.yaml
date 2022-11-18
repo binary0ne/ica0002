@@ -11,6 +11,12 @@
   roles:
     - remote_hosts
 
+- name: DNS server
+  hosts: dns_servers
+  become: yes
+  roles:
+    - bind
+
 - name: Database server
   hosts: db_servers
   become: yes
