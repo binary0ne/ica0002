@@ -1,5 +1,5 @@
 - name: Get variables
-  include_vars: agama_setup_vars.yaml
+  include_vars: group_vars/agama_setup_vars.yaml
 
 - name: Create Agama user
   ansible.builtin.user:

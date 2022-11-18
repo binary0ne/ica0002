@@ -1,5 +1,5 @@
 - name: Load agama vars
-  include_vars: agama_setup_vars.yaml
+  include_vars: group_vars/agama_setup_vars.yaml
 
 - name: Load uwsgi vars
   include_vars: uwsgi_install_vars.yaml
@@ -8,8 +8,13 @@
   ansible.builtin.apt:
     name:
       - uwsgi
-      - uwsgi-plugin-python3
   notify: Start uwsgi
+
+- name: Install agama dependencies
+  ansible.builtin.apt:
+    name:
+      - uwsgi-plugin-python3
+      - python3-pymysql
 
 - name: Enable uwsgi
   service:

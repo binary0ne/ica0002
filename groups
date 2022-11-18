@@ -1,5 +1,9 @@
+
 [remote_hosts]
 binary0ne-1
+binary0ne-2
+
+[db_servers]
 binary0ne-2
 
 [web_servers]
