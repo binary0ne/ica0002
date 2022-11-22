@@ -1,4 +1,5 @@
-mysql_host: "{{ hostvars['binary0ne-2']['ansible_default_ipv4']['address'] }}"
+mysql_host: binary0ne-2
+dns_host: "{{ hostvars['binary0ne-2']['ansible_default_ipv4']['address'] }}"
 mysql_database: agama
 mysql_user: agama
 mysql_password: !vault |
@@ -8,3 +9,4 @@ mysql_password: !vault |
           35363033323966393338306466386165383335633732633965386536343333333833663838623235
           3535363864613662640a393763316336633733613364633164333635306337363031633130383363
           6661
+startup_name: slaanesh.cult

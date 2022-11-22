@@ -1,0 +1,18 @@
+acl trusted { {% for host in groups['remote_hosts'] %}{{ hostvars[host]['ansible_default_ipv4']['network'] }}/{{ hostvars[host]['ansible_default_ipv4']['prefix'] }}; {% endfor %}127.0.0.0/8; };
+options {
+    directory "/var/cache/bind";
+
+    allow-query { trusted; };
+    recursion yes;
+    allow-recursion { trusted; };
+
+    forwarders {
+        8.8.8.8;
+        8.8.4.4;
+    };
+};
+
+zone "{{ startup_name }}" {
+    type master;
+    file "/etc/bind/zones/{{ startup_name }}.db";
+};
