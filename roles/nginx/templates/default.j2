@@ -1,3 +1,18 @@
+{% if ansible_hostname in groups["prometheus"] %}
+server {
+	listen 80 default_server;
+	server_name _;
+
+
+	location /prometheus {
+		proxy_pass http://localhost:9090;
+	}
+
+    location /metrics {
+		proxy_pass http://localhost:9100/metrics;
+	}
+}
+{% else %}
 server {
 	listen 80 default_server;
 	server_name _;
@@ -7,3 +22,4 @@ server {
 		include uwsgi_params;
 	}
 }
+{% endif %}

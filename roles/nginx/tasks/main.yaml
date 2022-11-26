@@ -4,11 +4,6 @@
       - nginx
   notify: Run Nginx
 
-- name: Enable nginx
-  service:
-    name: nginx
-    enabled: yes
-
 - name: Upload website page
   template:
     src: index.html.j2

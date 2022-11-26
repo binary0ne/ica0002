@@ -1,0 +1,10 @@
+- name: Run prometheus
+  service:
+    name: prometheus
+    state: started
+    enabled: yes
+
+- name: Restart prometheus
+  service:
+    name: prometheus
+    state: restarted

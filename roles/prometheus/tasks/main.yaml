@@ -1,0 +1,20 @@
+- name: Get variables
+  include_vars: group_vars/ips.yaml
+
+- name: Install prometheus
+  ansible.builtin.apt:
+    name:
+      - prometheus
+  notify: Run prometheus
+
+- name: Update prometheus config
+  template:
+    src: prometheus.yml.j2
+    dest: /etc/prometheus/prometheus.yml
+  notify: Restart prometheus
+
+- name: Fix prometheus path
+  template:
+    src: prometheus.j2
+    dest: /etc/default/prometheus
+  notify: Restart prometheus

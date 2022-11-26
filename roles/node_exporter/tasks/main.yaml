@@ -1,0 +1,5 @@
+- name: Installing Prometheus node exporter
+  ansible.builtin.apt:
+    name:
+      - prometheus-node-exporter
+  notify: Run node exporter

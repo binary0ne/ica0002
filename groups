@@ -1,8 +1,3 @@
-
-[remote_hosts]
-binary0ne-1
-binary0ne-2
-
 [dns_servers]
 binary0ne-2
 
@@ -11,3 +6,6 @@ binary0ne-2
 
 [web_servers]
 binary0ne-1
+
+[prometheus]
+binary0ne-2
