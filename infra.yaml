@@ -27,13 +27,17 @@
   roles:
     - remote_network
 
-- name: Prometheus server
-  hosts: prometheus
+- name: Monitoring server
+  hosts: monitoring
   become: yes
   gather_facts: no
   roles:
     - prometheus
+    - grafana
     - nginx
+  tags:
+    - monitoring_server
+    - monitoring
 
 - name: Database server
   hosts: db_servers
@@ -50,5 +54,37 @@
     - agama
     - uwsgi
     - nginx
+
+- name: DB monitoring
+  hosts: db_servers
+  become: yes
+  gather_facts: no
+  roles:
+    - mysql_exporter
+  tags:
+    - monitoring
+    - sql_monitoring
+
+- name: DNS monitoring
+  hosts: dns_servers
+  become: yes
+  gather_facts: no
+  roles:
+    - bind_exporter
+  tags:
+    - monitoring
+    - dns_monitoring
+
+- name: Nginx monitoring
+  hosts:
+    - web_servers
+    - monitoring
+  become: yes
+  gather_facts: no
+  roles:
+    - nginx_exporter
+  tags:
+    - monitoring
+    - nginx_monitoring
 
 

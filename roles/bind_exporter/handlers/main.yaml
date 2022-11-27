@@ -1,0 +1,10 @@
+- name: Run bind exporter
+  service:
+    name: prometheus-bind-exporter
+    state: started
+    enabled: yes
+
+- name: Restart bind exporter
+  service:
+    name: prometheus-bind-exporter
+    state: restarted

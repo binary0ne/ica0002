@@ -12,6 +12,10 @@ options {
     };
 };
 
+statistics-channels {
+  inet 127.0.0.1 port 8053 allow { 127.0.0.1; };
+};
+
 zone "{{ startup_name }}" {
     type master;
     file "/etc/bind/zones/{{ startup_name }}.db";

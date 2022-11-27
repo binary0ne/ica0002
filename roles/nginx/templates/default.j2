@@ -1,8 +1,7 @@
-{% if ansible_hostname in groups["prometheus"] %}
+{% if ansible_hostname in groups["monitoring"] %}
 server {
 	listen 80 default_server;
 	server_name _;
-
 
 	location /prometheus {
 		proxy_pass http://localhost:9090;
@@ -11,6 +10,11 @@ server {
     location /metrics {
 		proxy_pass http://localhost:9100/metrics;
 	}
+
+    location /grafana {
+        proxy_set_header Host $http_host;
+        proxy_pass http://localhost:3000;
+    }
 }
 {% else %}
 server {

@@ -7,5 +7,5 @@ binary0ne-2
 [web_servers]
 binary0ne-1
 
-[prometheus]
+[monitoring]
 binary0ne-2

@@ -1,0 +1,13 @@
+- name: Install nginx exporter
+  ansible.builtin.apt:
+    name:
+      - prometheus-nginx-exporter
+  notify: Run nginx exporter
+
+- name: Upload stub config
+  template:
+    src: stubs.j2
+    dest: /etc/nginx/sites-enabled/stubs
+  notify:
+    - Restart Nginx
+    - Restart nginx exporter
