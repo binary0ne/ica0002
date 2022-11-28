@@ -496,7 +496,7 @@
             "axisSoftMin": 0,
             "barAlignment": 0,
             "drawStyle": "bars",
-            "fillOpacity": 0,
+            "fillOpacity": 100,
             "gradientMode": "none",
             "hideFrom": {
               "legend": false,
@@ -504,7 +504,7 @@
               "viz": false
             },
             "lineInterpolation": "linear",
-            "lineWidth": 1,
+            "lineWidth": 0,
             "pointSize": 5,
             "scaleDistribution": {
               "type": "linear"
@@ -519,47 +519,31 @@
               "mode": "off"
             }
           },
-          "mappings": [],
+          "mappings": [
+            {
+              "options": {
+                "from": 80,
+                "result": {
+                  "color": "dark-red",
+                  "index": 0,
+                  "text": "ALERT"
+                },
+                "to": 100
+              },
+              "type": "range"
+            }
+          ],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
                 "color": "green",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
           }
         },
-        "overrides": [
-          {
-            "__systemRef": "hideSeriesFrom",
-            "matcher": {
-              "id": "byNames",
-              "options": {
-                "mode": "exclude",
-                "names": [
-                  "binary0ne-1:9100"
-                ],
-                "prefix": "All except:",
-                "readOnly": true
-              }
-            },
-            "properties": [
-              {
-                "id": "custom.hideFrom",
-                "value": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": true
-                }
-              }
-            ]
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
         "h": 8,
@@ -576,7 +560,7 @@
           "showLegend": false
         },
         "tooltip": {
-          "mode": "single",
+          "mode": "none",
           "sort": "none"
         }
       },
@@ -587,13 +571,14 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "100 * avg by (instance) (rate(node_cpu_seconds_total{mode!=\"idle\"}[30s]))",
+          "expr": "sum((avg by (instance, mode) (irate(node_cpu_seconds_total{mode!='idle', instance=\"binary0ne-1:9100\"}[30s])) * 100))",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
         }
       ],
       "title": "binary0ne-1 CPU",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -615,7 +600,7 @@
             "axisSoftMin": 0,
             "barAlignment": 0,
             "drawStyle": "bars",
-            "fillOpacity": 0,
+            "fillOpacity": 100,
             "gradientMode": "none",
             "hideFrom": {
               "legend": false,
@@ -638,47 +623,31 @@
               "mode": "off"
             }
           },
-          "mappings": [],
+          "mappings": [
+            {
+              "options": {
+                "from": 80,
+                "result": {
+                  "color": "dark-red",
+                  "index": 0,
+                  "text": "ALERT"
+                },
+                "to": 100
+              },
+              "type": "range"
+            }
+          ],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
                 "color": "green",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
           }
         },
-        "overrides": [
-          {
-            "__systemRef": "hideSeriesFrom",
-            "matcher": {
-              "id": "byNames",
-              "options": {
-                "mode": "exclude",
-                "names": [
-                  "binary0ne-2:9100"
-                ],
-                "prefix": "All except:",
-                "readOnly": true
-              }
-            },
-            "properties": [
-              {
-                "id": "custom.hideFrom",
-                "value": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": true
-                }
-              }
-            ]
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
         "h": 8,
@@ -695,10 +664,11 @@
           "showLegend": false
         },
         "tooltip": {
-          "mode": "single",
+          "mode": "none",
           "sort": "none"
         }
       },
+      "pluginVersion": "9.2.6",
       "targets": [
         {
           "datasource": {
@@ -706,13 +676,14 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "100 * avg by (instance) (rate(node_cpu_seconds_total{mode!=\"idle\"}[30s]))",
+          "expr": "sum((avg by (instance, mode) (irate(node_cpu_seconds_total{mode!='idle', instance=\"binary0ne-2:9100\"}[30s])) * 100))",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
         }
       ],
       "title": "binary0ne-2 CPU",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -971,6 +942,6 @@
   "timezone": "",
   "title": "Main",
   "uid": "cwPmiRF4z",
-  "version": 1,
+  "version": 2,
   "weekStart": ""
 }
