@@ -519,20 +519,7 @@
               "mode": "off"
             }
           },
-          "mappings": [
-            {
-              "options": {
-                "from": 80,
-                "result": {
-                  "color": "dark-red",
-                  "index": 0,
-                  "text": "ALERT"
-                },
-                "to": 100
-              },
-              "type": "range"
-            }
-          ],
+          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -623,20 +610,7 @@
               "mode": "off"
             }
           },
-          "mappings": [
-            {
-              "options": {
-                "from": 80,
-                "result": {
-                  "color": "dark-red",
-                  "index": 0,
-                  "text": "ALERT"
-                },
-                "to": 100
-              },
-              "type": "range"
-            }
-          ],
+          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -942,6 +916,6 @@
   "timezone": "",
   "title": "Main",
   "uid": "cwPmiRF4z",
-  "version": 2,
+  "version": 1,
   "weekStart": ""
 }
