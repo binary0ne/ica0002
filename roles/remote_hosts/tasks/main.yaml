@@ -7,9 +7,3 @@
   ansible.builtin.apt:
     name: ca-certificates>=20211000*
 
-- name: Setup rsyslog
-  template:
-    src: 50-telegraf.conf.j2
-    dest: /etc/rsyslog.d/50-telegraf.conf
-  notify:
-    Restart rsyslog

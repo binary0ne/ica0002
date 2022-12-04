@@ -129,3 +129,13 @@
   tags:
     - telegraf
 
+- name: rsyslog logging
+  hosts:
+    - remote_hosts
+  become: yes
+  gather_facts: no
+  roles:
+    - rsyslog
+  tags:
+    - rsyslog
+
