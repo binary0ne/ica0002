@@ -1,0 +1,10 @@
+- name: Run telegraf
+  service:
+    name: telegraf
+    state: started
+    enabled: yes
+
+- name: Restart telegraf
+  service:
+    name: telegraf
+    state: restarted

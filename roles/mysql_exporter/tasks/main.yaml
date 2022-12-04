@@ -20,3 +20,13 @@
     group: prometheus
     mode: '440'
   notify: Restart mysql exporter
+
+- name: Wait for mysql
+  ansible.builtin.pause:
+    seconds: 20
+
+- name: Start mysql exporter
+  service:
+    name: prometheus-mysqld-exporter
+    state: started
+    enabled: yes

@@ -1,0 +1,7 @@
+datasources:
+  - name: influxDB
+    type: influxdb
+    database: latency
+    url: http://{{ groups['influxdb'][0] }}:8086
+    jsonData:
+      httpMode: GET

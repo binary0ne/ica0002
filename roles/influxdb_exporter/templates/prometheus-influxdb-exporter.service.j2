@@ -1,0 +1,11 @@
+[Unit]
+Description=/usr/local/bin/prometheus-influxdb-exporter
+Documentation=/usr/local/bin/prometheus-influxdb-exporter
+After=network-online.target
+
+[Service]
+User=prometheus
+ExecStart=/usr/local/bin/prometheus-influxdb-exporter
+
+[Install]
+WantedBy=multi-user.target

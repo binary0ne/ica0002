@@ -1,0 +1,21 @@
+- name: download influxdb exporter
+  get_url:
+    url: https://github.com/carlpett/influxdb_stats_exporter/releases/download/v0.1.1/influx_stats_exporter_linux_amd64
+    dest: /usr/local/bin/prometheus-influxdb-exporter
+
+- name: set mode for influx exporter
+  file:
+    path: /usr/local/bin/prometheus-influxdb-exporter
+    mode: 0550
+    owner: prometheus
+    group: prometheus
+  notify:
+    - Run influxdb exporter
+
+- name: upload service template for influxdb exporter
+  template:
+    src: prometheus-influxdb-exporter.service.j2
+    dest: /etc/systemd/system/prometheus-influxdb-exporter.service
+  notify:
+    - Reload systemctl
+    - Run influxdb exporter

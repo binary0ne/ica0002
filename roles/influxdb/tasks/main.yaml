@@ -1,0 +1,28 @@
+- name: Check if influxdb is installed
+  command: dpkg-query -W influxdb
+  register: influxdb
+  failed_when: influxdb.rc > 1
+  changed_when: influxdb.rc == 1
+
+- name: Download influxdb
+  get_url:
+    url="https://dl.influxdata.com/influxdb/releases/influxdb_1.8.10_amd64.deb"
+    dest="~{{ ansible_env.USER }}/influxdb.deb"
+  when: influxdb.rc == 1
+
+- name: Install influxdb
+  apt: deb="~{{ ansible_env.USER }}/influxdb.deb"
+  when: influxdb.rc == 1
+  notify: Run influxdb
+
+- name: Start influxdb
+  service:
+    name: influxdb
+    state: started
+    enabled: yes
+
+- name: Upload influxdb config
+  template:
+    src: influxdb.conf.j2
+    dest: /etc/influxdb/influxdb.conf
+  notify: Restart influxdb

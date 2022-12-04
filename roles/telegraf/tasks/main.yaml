@@ -1,0 +1,20 @@
+- name: add telegraf gpg key
+  shell: curl https://repos.influxdata.com/influxdb.key | sudo apt-key add -
+
+- name: add telegraf repo
+  apt_repository:
+    repo: deb https://repos.influxdata.com/debian stable main
+    state: present
+
+- name: Install telegraf
+  apt:
+      name: telegraf
+      state: present
+      update_cache: yes
+  notify: Run telegraf
+
+- name: Upload telegraf config
+  copy:
+    src: telegraf.conf
+    dest: /etc/telegraf/telegraf.conf
+  notify: Restart telegraf

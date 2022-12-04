@@ -9,3 +9,9 @@ binary0ne-1
 
 [monitoring]
 binary0ne-2
+
+[influxdb]
+binary0ne-1
+
+[pinger]
+binary0ne-1

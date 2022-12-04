@@ -1,0 +1,7 @@
+datasources:
+  - name: Telegraf
+    type: influxdb
+    database: telegraf
+    url: http://{{ groups['influxdb'][0] }}:8086
+    jsonData:
+      httpMode: GET

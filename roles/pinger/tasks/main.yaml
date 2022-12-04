@@ -1,0 +1,41 @@
+- name: Ensure group pinger exists
+  ansible.builtin.group:
+    name: pinger
+    state: present
+
+- name: Add pinger user
+  ansible.builtin.user:
+    name: pinger
+    group: pinger
+
+- name: Install dependency
+  apt:
+    name: fping
+
+- name: Placing pinger script
+  template:
+    src: pinger.sh.j2
+    dest: /usr/local/bin/pinger
+    owner: pinger
+    group: pinger
+    mode: '550'
+
+- name: Placing pinger service
+  template:
+    src: pinger.service.j2
+    dest: /etc/systemd/system/pinger.service
+  notify:
+    - Reload systemctl
+    - Run pinger
+
+- name: Create pinger config folder
+  file:
+    path: /etc/pinger/
+    state: directory
+
+- name: Upload pinger config
+  template:
+    src: pinger.conf.j2
+    dest: /etc/pinger/pinger.conf
+  notify:
+    - Restart pinger

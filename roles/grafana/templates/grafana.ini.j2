@@ -2,5 +2,3 @@
 domain = {{ public_ip_addresses[ansible_hostname]['ip'] }}
 root_url = http://{{ public_ip_addresses[ansible_hostname]['ip'] }}:3000/grafana/
 serve_from_sub_path = true
-
-[datasources]

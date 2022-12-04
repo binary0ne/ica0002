@@ -1,0 +1,11 @@
+[Unit]
+Description=/usr/local/bin/pinger
+Documentation=/usr/local/bin/pinger
+After=network-online.target
+
+[Service]
+User=pinger
+ExecStart=/usr/local/bin/pinger
+
+[Install]
+WantedBy=multi-user.target

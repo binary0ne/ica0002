@@ -12,6 +12,8 @@
   roles:
     - remote_hosts
     - node_exporter
+  tags:
+    - remote_hosts
 
 - name: DNS server
   hosts: dns_servers
@@ -87,4 +89,43 @@
     - monitoring
     - nginx_monitoring
 
+- name: InfluxDB
+  hosts:
+    - influxdb
+  become: yes
+  gather_facts: no
+  roles:
+    - influxdb
+  tags:
+    - influxdb
+
+- name: Influxdb-exporter
+  hosts:
+    - influxdb
+  become: yes
+  gather_facts: no
+  roles:
+    - influxdb_exporter
+  tags:
+    - influxdb_monitoring
+
+- name: pinger
+  hosts:
+    - pinger
+  become: yes
+  gather_facts: no
+  roles:
+    - pinger
+  tags:
+    - pinger
+
+- name: telegraf
+  hosts:
+    - influxdb
+  become: yes
+  gather_facts: no
+  roles:
+    - telegraf
+  tags:
+    - telegraf
 

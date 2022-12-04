@@ -34,6 +34,18 @@
     dest: /etc/grafana/provisioning/datasources/prometheus.yaml
   notify: Restart grafana
 
+- name: Upload influxdb as datapoint
+  template:
+    src: influxdb.yaml.j2
+    dest: /etc/grafana/provisioning/datasources/influxdb.yaml
+  notify: Restart grafana
+
+- name: Upload telegraf as datapoint
+  template:
+    src: telegraf.yaml.j2
+    dest: /etc/grafana/provisioning/datasources/telegraf.yaml
+  notify: Restart grafana
+
 - name: Setup for dashboard provisioning
   template:
     src: provisioning.yaml.j2
