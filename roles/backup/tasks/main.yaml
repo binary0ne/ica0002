@@ -1,0 +1,28 @@
+- name: Add backup user
+  ansible.builtin.user:
+    name: backup
+    group: backup
+    home: /home/backup/
+    move_home: true
+
+- name: Generate keypair
+  community.crypto.openssh_keypair:
+    path: /home/backup/.ssh/id_rsa
+
+- name: Change ownership
+  file:
+    path: /home/backup/.ssh/id_rsa
+    owner: backup
+    group: backup
+
+- name: Add SSH keys for users
+  ansible.posix.authorized_key:
+    user: backup
+    key: "{{ backup_ssh }}"
+
+- name: Add to known hosts
+  template:
+    src: known_hosts.j2
+    dest: ~backup/.ssh/known_hosts
+    group: backup
+    owner: backup

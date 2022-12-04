@@ -5,13 +5,21 @@
   roles:
     - localhost
 
-- name: Remote hosts setup
+- name: Gather facts
   hosts: remote_hosts
   become: yes
   gather_facts: yes
+  tags:
+    - facts
+
+- name: Remote hosts setup
+  hosts: remote_hosts
+  become: yes
+  gather_facts: no
   roles:
     - remote_hosts
     - node_exporter
+    - backup
   tags:
     - remote_hosts
 
@@ -21,6 +29,8 @@
   gather_facts: no
   roles:
     - bind
+  tags:
+    - dns
 
 - name: Update for dns server
   hosts: remote_hosts

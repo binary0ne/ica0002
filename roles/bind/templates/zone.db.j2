@@ -14,3 +14,5 @@ ns1.{{ startup_name }}.    IN    A    {{ dns_host }}
 {{ host }}.{{ startup_name }}.    IN    A    {{ hostvars[host]['ansible_default_ipv4']['address'] }}
 {{ host }}.    IN    A    {{ hostvars[host]['ansible_default_ipv4']['address'] }}
 {% endfor %}
+backup.{{ startup_name }}.    IN    A    {{ backup }}
+backup.    IN    A    {{ backup }}

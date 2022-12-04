@@ -1,5 +1,5 @@
-binary0ne-1 ansible_host=193.40.156.67 ansible_port=13022 ansible_user=ubuntu
-binary0ne-2 ansible_host=193.40.156.67 ansible_port=19122 ansible_user=ubuntu
+binary0ne-1 ansible_host=193.40.156.67 ansible_port=41622 ansible_user=ubuntu
+binary0ne-2 ansible_host=193.40.156.67 ansible_port=35622 ansible_user=ubuntu
 
 [remote_hosts]
 binary0ne-1
