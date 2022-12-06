@@ -1,9 +1,21 @@
+- name: Add backup group
+  ansible.builtin.group:
+    name: backup
+    state: present
+
 - name: Add backup user
   ansible.builtin.user:
     name: backup
     group: backup
-    home: /home/backup/
-    move_home: true
+    shell: /bin/bash
+    home: /home/backup
+    create_home: true
+
+- name: Ensure .ssh exists
+  file:
+    path: /home/backup/.ssh
+    state: directory
+
 
 - name: Generate keypair
   community.crypto.openssh_keypair:
@@ -26,3 +38,14 @@
     dest: ~backup/.ssh/known_hosts
     group: backup
     owner: backup
+
+- name: Ensure restore folder is created
+  file:
+    path: /home/backup/restore
+    state: directory
+    owner: backup
+    group: backup
+
+- name: Install duplicity
+  apt:
+    name: duplicity

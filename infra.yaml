@@ -10,6 +10,7 @@
   become: yes
   gather_facts: yes
   tags:
+    - always
     - facts
 
 - name: Remote hosts setup
@@ -57,6 +58,9 @@
   gather_facts: no
   roles:
     - mysql
+    - mysql_backup
+  tags:
+    - mysqlserver
 
 - name: Web server
   hosts: web_servers
@@ -106,6 +110,7 @@
   gather_facts: no
   roles:
     - influxdb
+    - influxdb_backup
   tags:
     - influxdb
 

@@ -1,0 +1,11 @@
+- name: Ensure backup folder is created
+  file:
+    path: /home/backup/influxdb/
+    state: directory
+    owner: backup
+    group: backup
+
+- name: Upload crontab for influxdb backup
+  copy:
+    src: influxdb-backup
+    dest: /etc/cron.d/influxdb-backup
