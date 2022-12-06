@@ -1,0 +1,28 @@
+- name: Get variables
+  include_vars: db_servers.yaml
+
+- name: Swap master and slave
+  template:
+    src: mysql_groups.j2
+    dest: ./mysql_groups
+  when: ansible_hostname not in groups['db_servers']
+
+- name: Refresh hosts list
+  meta: refresh_inventory
+
+- block:
+  - name: Do swap
+    include_role:
+      name: mysql
+  - name: Update agama conf and restart uwsgi
+    include_role:
+      name: uwsgi
+    when: ansible_hostname in groups['web_servers']
+  - name: Upload crontab for agama backup
+    template:
+      src: mysql-backup.j2
+      dest: /etc/cron.d/mysql-backup
+    when: ansible_hostname in groups['db_servers']
+  become: yes
+  when: ansible_hostname in groups['db_servers']
+

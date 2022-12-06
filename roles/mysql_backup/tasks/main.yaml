@@ -21,6 +21,6 @@
     mode: '440'
 
 - name: Upload crontab for agama backup
-  copy:
-    src: mysql-backup
+  template:
+    src: mysql-backup.j2
     dest: /etc/cron.d/mysql-backup

@@ -1,0 +1,9 @@
+[db_servers:children]
+db_master
+db_slave
+
+[db_master]
+binary0ne-2
+
+[db_slave]
+binary0ne-1

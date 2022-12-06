@@ -4,6 +4,19 @@
   gather_facts: no
   roles:
     - localhost
+  tags:
+    - never
+    - localhost
+
+- name: Swap db master and slave
+  hosts:
+    - 127.0.0.1
+    - db_servers
+  roles:
+    - switch_dbs
+  tags:
+    - never
+    - mx
 
 - name: Gather facts
   hosts: remote_hosts

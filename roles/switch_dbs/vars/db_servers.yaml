@@ -1,0 +1,2 @@
+current_sql_master: "{{ groups['db_master'][0] }}"
+current_sql_slave: "{{ groups['db_slave'][0] }}"

@@ -15,10 +15,24 @@
     name:
       - python3-pymysql
 
+- name: Read only for slaves
+  community.mysql.mysql_variables:
+    login_user: root
+    variable: read_only
+    value: "{{ 'OFF' if inventory_hostname in groups['db_master'] else 'ON' }}"
+    mode: persist
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+  notify:
+    - Reset MySQL source
+    - Reset MySQL replica
+
 - name: MySQL database
   community.mysql.mysql_db:
     name: '{{ mysql_database }}'
     login_unix_socket: /var/run/mysqld/mysqld.sock
+  notify:
+    - Reset MySQL source
+    - Reset MySQL replica
 
 - name: agama MySQL user
   community.mysql.mysql_user:
@@ -26,4 +40,12 @@
     password: "{{ mysql_password }}"
     host: "%"
     priv: "{{ mysql_database }}.*:ALL"
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+
+- name: replication MySQL user
+  community.mysql.mysql_user:
+    name: "{{ replication_user }}"
+    password: "{{ replication_password }}"
+    host: "%"
+    priv: "*.*:REPLICATION SLAVE"
     login_unix_socket: /var/run/mysqld/mysqld.sock

@@ -64,3 +64,9 @@
     src: main.json
     dest: /etc/dashboards/main.json
   notify: Restart grafana
+
+- name: Upload mysql dashboard
+  copy:
+    src: mysql.json
+    dest: /etc/dashboards/mysql.json
+  notify: Restart grafana

@@ -1,9 +1,6 @@
 - name: Load agama vars
   include_vars: group_vars/agama_setup_vars.yaml
 
-- name: Load uwsgi vars
-  include_vars: uwsgi_install_vars.yaml
-
 - name: Install uwsgi
   ansible.builtin.apt:
     name:

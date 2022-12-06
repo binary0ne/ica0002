@@ -1,0 +1,9 @@
+[db_servers:children]
+db_master
+db_slave
+
+[db_master]
+{{ current_sql_slave }}
+
+[db_slave]
+{{ current_sql_master }}
