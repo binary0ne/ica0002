@@ -7,10 +7,9 @@
 
 - name: Create mysql backup user
   community.mysql.mysql_user:
-    login_user: root
     name: "{{ mysql_backup_user }}"
     password: "{{ mysql_backup_pass }}"
-    priv: "agama.*:LOCK TABLES, SELECT"
+    priv: "{{ mysql_database }}.*:LOCK TABLES,SELECT"
     login_unix_socket: /var/run/mysqld/mysqld.sock
 
 - name: Upload mysql backup user config

@@ -1,5 +1,7 @@
-- name: add telegraf gpg key
-  shell: curl https://repos.influxdata.com/influxdb.key | sudo apt-key add -
+- name: Add telegraf key
+  ansible.builtin.apt_key:
+    url: https://repos.influxdata.com/influxdb.key
+    state: present
 
 - name: add telegraf repo
   apt_repository:

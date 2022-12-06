@@ -1,0 +1,2 @@
+ARGS="--collect.slave_status"
+

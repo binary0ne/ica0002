@@ -4,12 +4,17 @@
       - prometheus-mysqld-exporter
   notify: Run mysql exporter
 
+- name: Add slave status exporter
+  copy:
+    src: prometheus-mysqld-exporter
+    dest: /etc/default/prometheus-mysqld-exporter
+  notify: Restart mysql exporter
+
 - name: Create mysql monitoring user
   community.mysql.mysql_user:
-    login_user: root
     name: "{{ mysql_exporter_user }}"
     password: "{{ mysql_exporter_password }}"
-    priv: "*.*:PROCESS, REPLICATION CLIENT, SELECT"
+    priv: "*.*:PROCESS,REPLICATION CLIENT,SELECT"
     login_unix_socket: /var/run/mysqld/mysqld.sock
 
 - name: Upload mysql exporter config
