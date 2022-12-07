@@ -62,8 +62,8 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
-        "w": 6,
+        "h": 6,
+        "w": 5,
         "x": 0,
         "y": 1
       },
@@ -125,9 +125,9 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
-        "w": 6,
-        "x": 6,
+        "h": 6,
+        "w": 5,
+        "x": 5,
         "y": 1
       },
       "id": 36,
@@ -220,9 +220,9 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
-        "w": 6,
-        "x": 12,
+        "h": 6,
+        "w": 5,
+        "x": 10,
         "y": 1
       },
       "id": 38,
@@ -312,9 +312,9 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
-        "w": 6,
-        "x": 18,
+        "h": 6,
+        "w": 5,
+        "x": 15,
         "y": 1
       },
       "id": 40,
@@ -347,16 +347,158 @@
       "type": "timeseries"
     },
     {
-      "collapsed": true,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "index": 0,
+                  "text": "down"
+                },
+                "1": {
+                  "index": 1,
+                  "text": "up"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 0.5
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 4,
+        "x": 20,
+        "y": 1
+      },
+      "id": 13,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "builder",
+          "expr": "mysql_up",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "MySQL",
+      "transformations": [],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 4,
+        "x": 20,
+        "y": 4
+      },
+      "id": 11,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "sum(rate(mysql_global_status_commands_total{command=\"select\"}[1m])) * 60",
+          "hide": false,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "selects/m",
+      "type": "stat"
+    },
+    {
+      "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 9
+        "y": 7
       },
-      "id": 24,
+      "id": 17,
       "panels": [],
-      "title": "Influx",
+      "title": "Services",
       "type": "row"
     },
     {
@@ -417,10 +559,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
-        "w": 12,
+        "h": 6,
+        "w": 3,
         "x": 0,
-        "y": 10
+        "y": 8
       },
       "id": 26,
       "options": {
@@ -600,10 +742,10 @@
         ]
       },
       "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 10
+        "h": 6,
+        "w": 3,
+        "x": 3,
+        "y": 8
       },
       "id": 28,
       "options": {
@@ -699,97 +841,6 @@
       "type": "timeseries"
     },
     {
-      "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 18
-      },
-      "id": 17,
-      "panels": [],
-      "title": "Services",
-      "type": "row"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [
-            {
-              "options": {
-                "0": {
-                  "index": 0,
-                  "text": "down"
-                },
-                "1": {
-                  "index": 1,
-                  "text": "up"
-                }
-              },
-              "type": "value"
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "red",
-                "value": null
-              },
-              {
-                "color": "green",
-                "value": 0.5
-              }
-            ]
-          },
-          "unit": "short"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 6,
-        "x": 0,
-        "y": 19
-      },
-      "id": 13,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "9.3.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "editorMode": "builder",
-          "expr": "mysql_up",
-          "legendFormat": "__auto",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "MySQL",
-      "transformations": [],
-      "type": "stat"
-    },
-    {
       "datasource": {
         "type": "prometheus",
         "uid": "PBFA97CFB590B2093"
@@ -832,7 +883,7 @@
         "h": 3,
         "w": 6,
         "x": 6,
-        "y": 19
+        "y": 8
       },
       "id": 19,
       "options": {
@@ -909,7 +960,7 @@
         "h": 3,
         "w": 6,
         "x": 12,
-        "y": 19
+        "y": 8
       },
       "id": 29,
       "options": {
@@ -986,7 +1037,7 @@
         "h": 3,
         "w": 6,
         "x": 18,
-        "y": 19
+        "y": 8
       },
       "id": 21,
       "options": {
@@ -1048,72 +1099,8 @@
       "gridPos": {
         "h": 3,
         "w": 6,
-        "x": 0,
-        "y": 22
-      },
-      "id": 11,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "9.3.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "editorMode": "code",
-          "expr": "sum(rate(mysql_global_status_commands_total{command=\"select\"}[1m])) * 60",
-          "hide": false,
-          "legendFormat": "__auto",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "selects/m",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "short"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 6,
         "x": 6,
-        "y": 22
+        "y": 11
       },
       "id": 20,
       "options": {
@@ -1177,7 +1164,7 @@
         "h": 3,
         "w": 6,
         "x": 12,
-        "y": 22
+        "y": 11
       },
       "id": 22,
       "options": {
@@ -1241,7 +1228,7 @@
         "h": 3,
         "w": 6,
         "x": 18,
-        "y": 22
+        "y": 11
       },
       "id": 30,
       "options": {
@@ -1282,7 +1269,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 25
+        "y": 14
       },
       "id": 15,
       "panels": [],
@@ -1348,7 +1335,7 @@
         "h": 6,
         "w": 12,
         "x": 0,
-        "y": 26
+        "y": 15
       },
       "id": 8,
       "options": {
@@ -1439,7 +1426,7 @@
         "h": 6,
         "w": 12,
         "x": 12,
-        "y": 26
+        "y": 15
       },
       "id": 9,
       "options": {
@@ -1560,7 +1547,7 @@
         "h": 6,
         "w": 12,
         "x": 0,
-        "y": 32
+        "y": 21
       },
       "id": 5,
       "options": {
@@ -1680,7 +1667,7 @@
         "h": 6,
         "w": 12,
         "x": 12,
-        "y": 32
+        "y": 21
       },
       "id": 6,
       "options": {
