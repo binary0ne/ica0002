@@ -20,7 +20,7 @@
     when: ansible_hostname in groups['web_servers']
   - name: Upload crontab for agama backup
     template:
-      src: mysql-backup.j2
+      src: ./roles/mysql_backup/templates/mysql-backup.j2
       dest: /etc/cron.d/mysql-backup
     when: ansible_hostname in groups['db_servers']
   become: yes
