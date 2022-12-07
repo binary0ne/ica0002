@@ -14,9 +14,9 @@
   - name: Do swap
     include_role:
       name: mysql
-  - name: Update agama conf and restart uwsgi
+  - name: Update agama conf and restart agama docker
     include_role:
-      name: uwsgi
+      name: agama
     when: ansible_hostname in groups['web_servers']
   - name: Upload crontab for agama backup
     template:

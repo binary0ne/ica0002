@@ -1,5 +1,5 @@
 - name: Operations on local machine
-  hosts: 127.0.0.1
+  hosts: localhost
   connection: local
   gather_facts: no
   roles:
@@ -10,7 +10,7 @@
 
 - name: Swap db master and slave
   hosts:
-    - 127.0.0.1
+    - localhost
     - db_servers
   roles:
     - switch_dbs
