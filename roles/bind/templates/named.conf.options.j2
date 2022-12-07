@@ -1,4 +1,4 @@
-acl trusted { {% for host in groups['remote_hosts'] %}{{ hostvars[host]['ansible_default_ipv4']['network'] }}/{{ hostvars[host]['ansible_default_ipv4']['prefix'] }}; {% endfor %}127.0.0.0/8; };
+acl trusted { {% for host in groups['remote_hosts'] %}{{ hostvars[host]['ansible_default_ipv4']['network'] }}/{{ hostvars[host]['ansible_default_ipv4']['prefix'] }}; {% endfor %}127.0.0.0/8; 172.17.0.0/16; };
 options {
     directory "/var/cache/bind";
 

@@ -4,11 +4,6 @@
       - nginx
   notify: Run Nginx
 
-- name: Upload website page
-  template:
-    src: index.html.j2
-    dest: /var/www/html/index.html
-
 - name: Upload nginx config
   template:
     src: default.j2

@@ -1,0 +1,10 @@
+dirs:
+  - provisioning/dashboards
+  - provisioning/datasources
+files:
+  - grafana.ini
+  - provisioning/dashboards/provisioning.yaml
+  - provisioning/dashboards/main.json
+  - provisioning/dashboards/mysql.json
+  - provisioning/datasources/default.yaml
+grafana_path: /opt/grafana/

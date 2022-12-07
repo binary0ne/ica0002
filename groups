@@ -4,7 +4,14 @@ binary0ne-2
 [web_servers]
 binary0ne-1
 
-[monitoring]
+[monitoring:children]
+prometheus
+grafana
+
+[prometheus]
+binary0ne-2
+
+[grafana]
 binary0ne-2
 
 [influxdb]

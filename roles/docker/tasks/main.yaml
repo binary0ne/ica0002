@@ -1,0 +1,7 @@
+- name: Install docker (and save the God all of us!)
+  apt:
+    name: docker.io
+
+- name: Install pyhon3-docker
+  apt:
+    name: python3-docker

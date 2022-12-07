@@ -1,0 +1,21 @@
+datasources:
+  - name: Prometheus
+    type: prometheus
+    url: http://{{ groups['prometheus'][0] }}/prometheus
+    isDefault: true
+  - name: Telegraf
+    type: influxdb
+    database: telegraf
+    url: http://{{ groups['influxdb'][0] }}:8086
+    jsonData:
+      httpMode: GET
+  - name: influxDB
+    type: influxdb
+    database: latency
+    url: http://{{ groups['influxdb'][0] }}:8086
+    jsonData:
+      httpMode: GET
+
+
+
+

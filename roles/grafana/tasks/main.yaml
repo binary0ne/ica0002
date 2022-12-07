@@ -1,72 +1,25 @@
-- name: Get variables
-  include_vars: group_vars/ips.yaml
+- name: Get grafana structure vars
+  include_vars: grafana_structure.yaml
 
-- name: Install necessary package
-  apt:
-      name: apt-transport-https
-      state: present
-      update_cache: yes
+- name: Get public ips
+  include_vars: ./group_vars/ips.yaml
 
-- name: Add grafana key
-  ansible.builtin.apt_key:
-    url: https://packages.grafana.com/gpg.key
-    state: present
-
-- name: add grafana repo
-  apt_repository:
-    repo: deb https://packages.grafana.com/enterprise/deb stable main
-    state: present
-
-- name: Install grafana
-  apt:
-      name: grafana
-      state: present
-      update_cache: yes
+- name: Create grafana container
+  community.docker.docker_container:
+    name: grafana
+    image: grafana/grafana
   notify: Run grafana
 
-- name: Upload grafana config
-  template:
-    src: grafana.ini.j2
-    dest: /etc/grafana/grafana.ini
-  notify: Restart grafana
-
-- name: Upload prometheus as datapoint
-  template:
-    src: prometheus.yaml.j2
-    dest: /etc/grafana/provisioning/datasources/prometheus.yaml
-  notify: Restart grafana
-
-- name: Upload influxdb as datapoint
-  template:
-    src: influxdb.yaml.j2
-    dest: /etc/grafana/provisioning/datasources/influxdb.yaml
-  notify: Restart grafana
-
-- name: Upload telegraf as datapoint
-  template:
-    src: telegraf.yaml.j2
-    dest: /etc/grafana/provisioning/datasources/telegraf.yaml
-  notify: Restart grafana
-
-- name: Setup for dashboard provisioning
-  template:
-    src: provisioning.yaml.j2
-    dest: /etc/grafana/provisioning/dashboards/provisioning.yaml
-  notify: Restart grafana
-
-- name: Create provisioning directory
+- name: Create grafana directories
   file:
-    path: /etc/dashboards/
+    path: "{{ grafana_path }}{{ item }}"
     state: directory
+    recurse: yes
+  loop: "{{ dirs }}"
 
-- name: Upload grafana dashboard
-  copy:
-    src: main.json
-    dest: /etc/dashboards/main.json
-  notify: Restart grafana
-
-- name: Upload mysql dashboard
-  copy:
-    src: mysql.json
-    dest: /etc/dashboards/mysql.json
+- name: Create grafana files
+  template:
+    src: "{{ item.split('/')[-1] }}.j2"
+    dest: "{{ grafana_path }}{{ item }}"
+  loop: "{{ files }}"
   notify: Restart grafana

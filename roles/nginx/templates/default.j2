@@ -1,8 +1,8 @@
-{% if ansible_hostname in groups["monitoring"] %}
 server {
 	listen 80 default_server;
 	server_name _;
 
+{% if ansible_hostname in groups["prometheus"] %}
 	location /prometheus {
 		proxy_pass http://localhost:9090;
 	}
@@ -10,20 +10,17 @@ server {
     location /metrics {
 		proxy_pass http://localhost:9100/metrics;
 	}
-
+{% endif %}
+{% if ansible_hostname in groups["grafana"] %}
     location /grafana {
         proxy_set_header Host $http_host;
-        proxy_pass http://localhost:3000;
+        proxy_pass http://localhost:{{ grafana_port }};
     }
-}
-{% else %}
-server {
-	listen 80 default_server;
-	server_name _;
-
-	location / {
-		uwsgi_pass localhost:5000;
-		include uwsgi_params;
-	}
-}
 {% endif %}
+{% if ansible_hostname in groups["web_servers"] %}
+	location / {
+        proxy_set_header Host $http_host;
+		proxy_pass http://localhost:{{ agama_port }};
+	}
+{% endif %}
+}

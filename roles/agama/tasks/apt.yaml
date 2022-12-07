@@ -1,0 +1,23 @@
+- name: Get variables
+  include_vars: group_vars/agama_setup_vars.yaml
+
+- name: Create Agama user
+  ansible.builtin.user:
+    name: agama
+    group: users
+
+- name: Create Agama Folder
+  ansible.builtin.file:
+    path: '{{ agama_path }}'
+    state: directory
+    owner: agama
+
+- name: Install Agama Dependencies
+  ansible.builtin.apt:
+    name:
+      - python3-flask-sqlalchemy
+
+- name: Get Agama
+  ansible.builtin.get_url:
+    url: '{{ agama_source }}'
+    dest: '{{ agama_path }}'

@@ -1,23 +1,29 @@
-- name: Get variables
-  include_vars: group_vars/agama_setup_vars.yaml
-
-- name: Create Agama user
-  ansible.builtin.user:
-    name: agama
-    group: users
+- name: Get agama structure vars
+  include_vars: agama_structure.yaml
 
 - name: Create Agama Folder
   ansible.builtin.file:
     path: '{{ agama_path }}'
     state: directory
-    owner: agama
-
-- name: Install Agama Dependencies
-  ansible.builtin.apt:
-    name:
-      - python3-flask-sqlalchemy
 
 - name: Get Agama
   ansible.builtin.get_url:
-    url: '{{ agama_source }}'
+    url: '{{ item }}'
     dest: '{{ agama_path }}'
+  loop: '{{ agama_source }}'
+
+- name: Build agama
+  docker_image:
+    name: agama
+    source: build
+    build:
+      path: '{{ agama_path }}'
+
+- name: Run agama container
+  docker_container:
+    name: agama
+    image: agama
+    exposed_ports: "{{ agama_port }}"
+    published_ports: "{{ agama_port }}:8000"
+    env:
+      AGAMA_DATABASE_URI: "mysql+pymysql://{{ mysql_user }}:{{ mysql_password }}@{{ mysql_host }}/{{ mysql_database }}"
