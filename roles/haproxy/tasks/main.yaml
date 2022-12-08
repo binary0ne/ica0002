@@ -1,0 +1,24 @@
+- name: Load agama vars
+  include_vars: roles/agama/vars/agama_structure.yaml
+
+- name: Install HAproxy
+  apt:
+    name: haproxy
+  notify: Run haproxy
+
+- name: Upload haproxy config
+  template:
+    src: haproxy.cfg.j2
+    dest: /etc/haproxy/haproxy.cfg
+  notify: Restart haproxy
+
+- name: Install haproxy exporter
+  apt:
+    name: prometheus-haproxy-exporter
+  notify: Run haproxy exporter
+
+- name: Provide haproxy config
+  template:
+    src: prometheus-haproxy-exporter.j2
+    dest: /etc/default/prometheus-haproxy-exporter
+  notify: Restart haproxy exporter

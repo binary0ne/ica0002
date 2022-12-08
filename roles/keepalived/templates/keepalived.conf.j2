@@ -1,0 +1,27 @@
+{% set octet = hostvars[groups['remote_hosts'][0]]['ansible_default_ipv4']['address'].split('.')[-2]|int %}
+{% set loctet = hostvars[groups['remote_hosts'][0]]['ansible_default_ipv4']['address'].split('.')[-1] %}
+global_defs {
+    enable_script_security
+}
+vrrp_script check_haproxy {
+    script /home/keepalived_script/vrrp_script.sh
+    weight 20
+    interval 1
+}
+vrrp_instance agama {
+    interface ens3
+    virtual_router_id {{ virtual_router_id }}
+    priority {% set result = ansible_hostname[-1]|int%}{{ result * 10 + 50 }}
+    advert_int 1
+    virtual_ipaddress {
+        192.168.{% if octet == 42 %}{{ '100.' + loctet }}{% else %}{{ '101.' + loctet }}{% endif %}/24
+    }
+    unicast_peer {
+{% for host in groups['web_servers'] %}{% if host != ansible_hostname %}
+        {{ hostvars[host]['ansible_default_ipv4']['address'] }}{% endif %}{% endfor %}
+
+    }
+    track_script {
+        check_haproxy
+    }
+}

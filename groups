@@ -3,6 +3,7 @@ binary0ne-2
 
 [web_servers]
 binary0ne-1
+binary0ne-2
 
 [monitoring:children]
 prometheus

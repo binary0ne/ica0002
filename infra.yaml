@@ -103,6 +103,8 @@
     - nginx
     - docker
     - agama
+    - keepalived
+    - haproxy
   tags:
     - agama
 

@@ -1,0 +1,11 @@
+[Unit]
+Description=/usr/local/bin/prometheus-keepalived-exporter
+Documentation=/usr/local/bin/prometheus-keepalived-exporter
+After=network-online.target
+
+[Service]
+User=root
+ExecStart=/usr/local/bin/prometheus-keepalived-exporter
+
+[Install]
+WantedBy=multi-user.target

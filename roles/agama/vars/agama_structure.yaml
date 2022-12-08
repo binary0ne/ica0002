@@ -2,3 +2,4 @@ agama_path: /opt/agama/
 agama_source:
   - https://raw.githubusercontent.com/hudolejev/agama/master/agama.py
   - https://raw.githubusercontent.com/hudolejev/agama/master/Dockerfile
+amount: 2

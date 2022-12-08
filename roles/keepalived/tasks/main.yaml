@@ -1,0 +1,52 @@
+- name: Install keepalived
+  apt:
+    name: keepalived
+  notify:
+    - Run keepalived
+
+- name: Add group
+  group:
+    name: keepalived_script
+
+- name: Add user for scripts
+  user:
+    name: keepalived_script
+    group: keepalived_script
+    create_home: yes
+
+- name: Upload script
+  template:
+    src: vrrp_script.sh.j2
+    dest: ~keepalived_script/vrrp_script.sh
+    mode: "555"
+  notify:
+    - Restart keepalived
+
+- name: Upload keepalived config
+  template:
+    src: keepalived.conf.j2
+    dest: /etc/keepalived/keepalived.conf
+  notify:
+    - Run keepalived
+    - Restart keepalived
+
+- name: Download keepalived-exporter
+  unarchive:
+    src: http://backup/keepalived-exporter-1.2.0.linux-amd64.tar.gz
+    dest: /home/ubuntu
+    remote_src: yes
+
+- name: Put exporter to bin folder
+  copy:
+    src: /home/ubuntu/keepalived-exporter-1.2.0.linux-amd64/keepalived-exporter
+    dest: /usr/local/bin/prometheus-keepalived-exporter
+    remote_src: yes
+    mode: '550'
+
+- name: Placing keepalived-exporter service
+  template:
+    src: prometheus-keepalived-exporter.service.j2
+    dest: /etc/systemd/system/prometheus-keepalived-exporter.service
+  notify:
+    - Reload systemctl
+    - Run keepalived exporter
