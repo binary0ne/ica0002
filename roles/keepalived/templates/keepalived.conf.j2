@@ -11,7 +11,7 @@ vrrp_script check_haproxy {
 vrrp_instance agama {
     interface ens3
     virtual_router_id {{ virtual_router_id }}
-    priority {% set result = ansible_hostname[-1]|int%}{{ result * 10 + 50 }}
+    priority {% set result = ansible_hostname[-1]|int%}{{ result * 2 + 50 }}
     advert_int 1
     virtual_ipaddress {
         192.168.{% if octet == 42 %}{{ '100.' + loctet }}{% else %}{{ '101.' + loctet }}{% endif %}/24

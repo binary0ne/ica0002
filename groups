@@ -7,13 +7,14 @@ binary0ne-2
 
 [dns_slave]
 binary0ne-1
+binary0ne-3
 
 [haproxy:children]
 web_servers
 
 [web_servers]
 binary0ne-1
-binary0ne-2
+binary0ne-3
 
 [monitoring:children]
 prometheus
@@ -26,7 +27,7 @@ binary0ne-2
 binary0ne-2
 
 [influxdb]
-binary0ne-1
+binary0ne-2
 
 [pinger]
-binary0ne-1
+binary0ne-2
