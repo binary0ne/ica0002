@@ -1,11 +1,20 @@
 acl trusted { {% for host in groups['remote_hosts'] %}{{ hostvars[host]['ansible_default_ipv4']['network'] }}/{{ hostvars[host]['ansible_default_ipv4']['prefix'] }}; {% endfor %}127.0.0.0/8; 172.17.0.0/16; };
+key "transfer.key" {
+        algorithm hmac-sha256;
+        secret "{{ bind_secret }}";
+};
+
+key "rndc-key" {
+        algorithm hmac-sha256;
+        secret "{{ ns_update_key }}";
+};
+
 options {
     directory "/var/cache/bind";
 
     allow-query { trusted; };
     recursion yes;
     allow-recursion { trusted; };
-
     forwarders {
         8.8.8.8;
         8.8.4.4;
@@ -17,6 +26,37 @@ statistics-channels {
 };
 
 zone "{{ startup_name }}" {
-    type master;
-    file "/etc/bind/zones/{{ startup_name }}.db";
+    type {% if ansible_hostname in groups['dns_master'] %}master{% else %}slave{% endif %};
+    file "/var/cache/bind/zones/{{ startup_name }}.db";
+    {% if ansible_hostname in groups['dns_master'] %}allow-transfer { key "transfer.key"; };{% endif %}
+
+    {% if ansible_hostname in groups['dns_master'] %}allow-update { key "rndc-key"; };{% endif %}
+    {% if ansible_hostname in groups['dns_slave'] %}masters {
+        {% for host in groups['dns_master'] %}
+        {{ hostvars[host]['ansible_default_ipv4']['address'] }};{% endfor %}
+
+    };{% endif %}
+
 };
+
+zone "168.192.in-addr.arpa" {
+    type {% if ansible_hostname in groups['dns_master'] %}master{% else %}slave{% endif %};
+    file "/var/cache/bind/zones/{{ startup_name }}.rev";
+    {% if ansible_hostname in groups['dns_master'] %}allow-transfer { key "transfer.key"; };{% endif %}
+
+    {% if ansible_hostname in groups['dns_master'] %}allow-update { key "rndc-key"; };{% endif %}
+    {% if ansible_hostname in groups['dns_slave'] %}masters {
+        {% for host in groups['dns_master'] %}
+        {{ hostvars[host]['ansible_default_ipv4']['address'] }};{% endfor %}
+
+    };{% endif %}
+
+};
+
+{% if ansible_hostname in groups['dns_slave'] %}
+{% for host in groups['dns_master'] %}
+server {{ hostvars[host]['ansible_default_ipv4']['address'] }} {
+    keys { transfer.key; };
+};
+{% endfor %}
+{% endif %}

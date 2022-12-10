@@ -1,0 +1,15 @@
+ns_hosts:
+  - name: backup
+    address: {{ backup }}
+    type: A
+{% for key, value in groups_map.items() %}{% if groups[key]|length == 1 %}
+  - name: {{ value }}
+    address: {{ groups[key][0] }}
+    type: CNAME
+{% else %}
+{% for host in groups[key] %}
+  - name: {{ value }}{{ loop.index }}
+    address: {{ host }}
+    type: CNAME
+{% endfor %}
+{% endif %}{% endfor %}

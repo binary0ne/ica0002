@@ -9,14 +9,3 @@
     src: named.conf.options.j2
     dest: /etc/bind/named.conf.options
   notify: Restart bind
-
-- name: Creates zone directory
-  file:
-    path: /etc/bind/zones
-    state: directory
-
-- name: Update zones config
-  template:
-    src: zone.db.j2
-    dest: "/etc/bind/zones/{{ startup_name }}.db"
-  notify: Restart bind

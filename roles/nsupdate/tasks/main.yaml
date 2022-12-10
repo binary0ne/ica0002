@@ -1,0 +1,53 @@
+- name: Creates zone directory
+  file:
+    path: /var/cache/bind/zones
+    state: directory
+    recurse: yes
+    owner: bind
+    group: bind
+
+- name: Update zones config
+  template:
+    src: zone.db.j2
+    dest: "/var/cache/bind/zones/{{ startup_name }}.db"
+    owner: bind
+    group: bind
+    force: no
+  notify: Restart bind
+
+- name: Update reverse config
+  template:
+    src: zone.rev.j2
+    dest: "/var/cache/bind/zones/{{ startup_name }}.rev"
+    owner: bind
+    group: bind
+    force: no
+  notify: Restart bind
+
+- block:
+  - name: Prepare vars
+    template:
+      src: ns_records.yaml.j2
+      dest: roles/nsupdate/vars/ns_records.yaml
+    delegate_to: localhost
+  become: no
+
+- name: Add new hosts
+  include_vars:
+    file: ns_records.yaml
+
+- name: Install python dependencies
+  apt:
+    name: python3-dnspython
+
+- name: Add dns records
+  nsupdate:
+    key_algorithm: hmac-sha256
+    key_name: "rndc-key"
+    key_secret: "{{ ns_update_key }}"
+    server: localhost
+    zone: "{{ startup_name }}"
+    type: "{{ item.type }}"
+    record: "{{ item.name }}"
+    value: "{{ item.address }}"
+  loop: "{{ ns_hosts }}"

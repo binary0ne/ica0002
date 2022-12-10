@@ -1,5 +1,15 @@
-[dns_servers]
+[dns_servers:children]
+dns_master
+dns_slave
+
+[dns_master]
 binary0ne-2
+
+[dns_slave]
+binary0ne-1
+
+[haproxy:children]
+web_servers
 
 [web_servers]
 binary0ne-1

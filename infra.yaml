@@ -46,6 +46,15 @@
   tags:
     - dns
 
+- name: Update ns records
+  hosts: dns_master
+  become: yes
+  gather_facts: no
+  roles:
+    - nsupdate
+  tags:
+    - dns
+
 - name: Update for dns server
   hosts: remote_hosts
   become: yes

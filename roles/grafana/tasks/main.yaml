@@ -4,12 +4,6 @@
 - name: Get public ips
   include_vars: ./group_vars/ips.yaml
 
-- name: Create grafana container
-  community.docker.docker_container:
-    name: grafana
-    image: grafana/grafana
-  notify: Run grafana
-
 - name: Create grafana directories
   file:
     path: "{{ grafana_path }}{{ item }}"
@@ -23,3 +17,13 @@
     dest: "{{ grafana_path }}{{ item }}"
   loop: "{{ files }}"
   notify: Restart grafana
+
+- name: Create grafana container
+  community.docker.docker_container:
+    name: grafana
+    image: grafana/grafana
+    state: started
+    exposed_ports: "{{ grafana_port }}"
+    published_ports: "{{ grafana_port }}:3000"
+    volumes: "{{ grafana_path }}:/etc/grafana"
+    restart_policy: always
