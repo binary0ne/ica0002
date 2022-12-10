@@ -46,11 +46,21 @@
   tags:
     - dns
 
+- name: Provide initial dns config
+  hosts: dns_master
+  become: yes
+  gather_facts: no
+  roles:
+    - nsstaticconf
+  tags:
+    - dns
+
 - name: Update ns records
   hosts: dns_master
   become: yes
   gather_facts: no
   roles:
+    - nsstaticconf
     - nsupdate
   tags:
     - dns

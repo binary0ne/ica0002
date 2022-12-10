@@ -4,8 +4,21 @@
       - bind9
   notify: Start bind
 
+- name: Install python dependencies
+  apt:
+    name: python3-dnspython
+
 - name: Update bind config
   template:
     src: named.conf.options.j2
     dest: /etc/bind/named.conf.options
+  notify: Restart bind
+
+- name: Creates zone directory
+  file:
+    path: /var/cache/bind/zones
+    state: directory
+    recurse: yes
+    owner: bind
+    group: bind
   notify: Restart bind

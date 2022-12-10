@@ -1,0 +1,17 @@
+- name: Update zones config
+  template:
+    src: zone.db.j2
+    dest: "/var/cache/bind/zones/{{ startup_name }}.db"
+    owner: bind
+    group: bind
+    force: no
+  notify: Restart bind
+
+- name: Update reverse config
+  template:
+    src: zone.rev.j2
+    dest: "/var/cache/bind/zones/{{ startup_name }}.rev"
+    owner: bind
+    group: bind
+    force: no
+  notify: Restart bind

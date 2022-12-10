@@ -11,7 +11,7 @@ key "rndc-key" {
 
 options {
     directory "/var/cache/bind";
-
+    {%  if ansible_hostname in groups['dns_master'] %}also-notify { {% for hostname in groups['dns_slave'] %}{{ hostvars[hostname]['ansible_default_ipv4']['address'] }}; {% endfor %} };{% endif %}
     allow-query { trusted; };
     recursion yes;
     allow-recursion { trusted; };
