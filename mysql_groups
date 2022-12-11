@@ -3,7 +3,7 @@ db_master
 db_slave
 
 [db_master]
-binary0ne-3
+binary0ne-1
 
 [db_slave]
-binary0ne-1
+binary0ne-3

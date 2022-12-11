@@ -2,7 +2,7 @@
 `ansible-playbook infra.yaml` on local machine.
 
 ## **Restore MySQL data from the backup:**
-Run on desired mysql machine from mysql servers group.
+Run on еру non-read-only mysql machine from mysql servers group.
 1. `sudo -u backup duplicity --no-encryption restore rsync://binary0ne@backup/mysql /home/backup/restore/mysql`
 2. `sudo mysql agama < /home/backup/restore/mysql/agama.sql`
 
