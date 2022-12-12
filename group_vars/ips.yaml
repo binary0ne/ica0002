@@ -1,10 +1,10 @@
 public_ip_addresses:
   binary0ne-1:
     ip: 193.40.156.67
-    port: 7180
+    port: 3280
   binary0ne-2:
     ip: 193.40.156.67
-    port: 2580
+    port: 14380
   binary0ne-3:
     ip: 193.40.156.67
-    port: 16780
+    port: 15680
