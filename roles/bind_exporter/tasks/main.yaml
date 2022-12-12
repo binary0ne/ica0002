@@ -3,3 +3,9 @@
     name:
       - prometheus-bind-exporter
   notify: Run bind exporter
+
+- name: Run bind exporter
+  service:
+    name: prometheus-bind-exporter
+    state: started
+    enabled: yes

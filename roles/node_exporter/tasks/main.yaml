@@ -3,3 +3,9 @@
     name:
       - prometheus-node-exporter
   notify: Run node exporter
+
+- name: Run node exporter
+  service:
+    name: prometheus-node-exporter
+    state: started
+    enabled: yes

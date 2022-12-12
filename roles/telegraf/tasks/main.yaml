@@ -20,3 +20,9 @@
     src: telegraf.conf
     dest: /etc/telegraf/telegraf.conf
   notify: Restart telegraf
+
+- name: Run telegraf
+  service:
+    name: telegraf
+    state: started
+    enabled: yes

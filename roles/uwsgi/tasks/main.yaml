@@ -16,6 +16,7 @@
 - name: Enable uwsgi
   service:
     name: uwsgi
+    state: started
     enabled: yes
 
 - name: Upload config

@@ -49,3 +49,9 @@
     host: "%"
     priv: "*.*:REPLICATION SLAVE"
     login_unix_socket: /var/run/mysqld/mysqld.sock
+
+- name: Run MySQL-server
+  service:
+    name: mysql
+    state: started
+    enabled: yes

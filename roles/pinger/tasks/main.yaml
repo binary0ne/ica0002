@@ -19,6 +19,7 @@
     owner: pinger
     group: pinger
     mode: '550'
+  notify: Restart pinger
 
 - name: Placing pinger service
   template:
@@ -39,3 +40,9 @@
     dest: /etc/pinger/pinger.conf
   notify:
     - Restart pinger
+
+- name: Run pinger
+  service:
+    name: pinger
+    state: started
+    enabled: yes

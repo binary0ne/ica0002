@@ -19,3 +19,13 @@
   notify:
     - Reload systemctl
     - Run influxdb exporter
+
+- name: Reload systemctl
+  ansible.builtin.systemd:
+    daemon_reload: yes
+
+- name: Run influxdb exporter
+  service:
+    name: prometheus-influxdb-exporter
+    state: started
+    enabled: yes

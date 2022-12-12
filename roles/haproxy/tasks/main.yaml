@@ -22,3 +22,15 @@
     src: prometheus-haproxy-exporter.j2
     dest: /etc/default/prometheus-haproxy-exporter
   notify: Restart haproxy exporter
+
+- name: Run haproxy
+  service:
+    name: haproxy
+    state: started
+    enabled: yes
+
+- name: Run haproxy exporter
+  service:
+    name: prometheus-haproxy-exporter
+    state: started
+    enabled: yes

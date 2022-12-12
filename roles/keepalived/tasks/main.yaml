@@ -50,3 +50,19 @@
   notify:
     - Reload systemctl
     - Run keepalived exporter
+
+- name: Reload systemctl
+  ansible.builtin.systemd:
+    daemon_reload: yes
+
+- name: Run keepalived
+  service:
+    name: keepalived
+    state: started
+    enabled: yes
+
+- name: Run keepalived exporter
+  service:
+    name: prometheus-keepalived-exporter
+    state: started
+    enabled: yes

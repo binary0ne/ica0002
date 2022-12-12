@@ -5,3 +5,9 @@
   notify:
   - Run nginx exporter
   - Restart Nginx
+
+- name: Run nginx exporter
+  service:
+    name: prometheus-nginx-exporter
+    state: started
+    enabled: yes

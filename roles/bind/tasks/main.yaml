@@ -22,3 +22,9 @@
     owner: bind
     group: bind
   notify: Restart bind
+
+- name: Start bind
+  service:
+    name: bind9
+    state: started
+    enabled: yes

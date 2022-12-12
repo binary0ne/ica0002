@@ -18,3 +18,9 @@
     src: prometheus.j2
     dest: /etc/default/prometheus
   notify: Restart prometheus
+
+- name: Run prometheus
+  service:
+    name: prometheus
+    state: started
+    enabled: yes
